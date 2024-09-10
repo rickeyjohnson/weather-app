@@ -1,6 +1,7 @@
 import { API_KEY } from './API.js'
 
-let currentWeather
+const searchBar = document.querySelector("#searchbar")
+const searchBtn = document.querySelector("#searchbtn")
 
 async function getWeatherData(location) {
     const url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "?key=" + API_KEY
@@ -9,8 +10,18 @@ async function getWeatherData(location) {
 
     const {address, currentConditions} = weather
     const {conditions, temp} = currentConditions
+    const currentWeather = { address, conditions, temp}
 
-    
+    console.log(currentWeather)
 }
 
-getWeatherData("london")
+function resetSearch() {
+    searchBar.value = ""
+    searchBar.textContent = ""
+}
+
+searchBtn.addEventListener("click", () => {
+    getWeatherData(searchBar.value)
+
+    resetSearch()
+})
