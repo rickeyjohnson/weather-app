@@ -4,17 +4,20 @@ const searchBar = document.querySelector("#searchbar")
 const searchBtn = document.querySelector("#searchbtn")
 
 async function getWeatherData(location) {
-    const url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "?key=" + API_KEY
-    const response = await fetch(url, { mode: 'cors' })
-    const weather = await response.json()
-
-    const {address, currentConditions} = weather
-    const {conditions, temp} = currentConditions
-    const currentWeather = { address, conditions, temp}
-
-    console.log(currentWeather)
-    clearWeather()
-    displayWeather(currentWeather)
+    try {
+        const url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "?key=" + API_KEY
+        const response = await fetch(url, { mode: 'cors' })
+        const weather = await response.json()
+    
+        const {address, currentConditions} = weather
+        const {conditions, temp} = currentConditions
+        const currentWeather = { address, conditions, temp}
+    
+        clearWeather()
+        displayWeather(currentWeather)
+    } catch (error) {
+        handleError()
+    }
 }
 
 function resetSearch() {
@@ -24,6 +27,7 @@ function resetSearch() {
 
 function displayWeather(weather) {
     const content = document.querySelector("#content")
+    searchBar.setAttribute("class", "")
 
     const addressDiv = document.createElement("div")
     addressDiv.textContent = weather.address
@@ -47,6 +51,10 @@ function clearWeather() {
         e.removeChild(child);
         child = e.lastElementChild;
     }
+}
+
+function handleError() {
+    searchBar.setAttribute("class", "invalid")
 }
 
 searchBtn.addEventListener("click", () => {

@@ -20,3 +20,7 @@ body {
 .title {
     font-size: 100px;
 }
+
+.invalid {
+    border-color: red;
+}
