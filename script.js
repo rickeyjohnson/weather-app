@@ -13,6 +13,7 @@ async function getWeatherData(location) {
     const currentWeather = { address, conditions, temp}
 
     console.log(currentWeather)
+    displayWeather(currentWeather)
 }
 
 function resetSearch() {
@@ -20,8 +21,25 @@ function resetSearch() {
     searchBar.textContent = ""
 }
 
+function displayWeather(weather) {
+    const content = document.querySelector("#content")
+
+    const addressDiv = document.createElement("div")
+    addressDiv.textContent = weather.address
+    addressDiv.setAttribute("class", "title")
+    content.appendChild(addressDiv)
+
+    const conditionsDiv = document.createElement("div")
+    conditionsDiv.textContent = weather.conditions
+    content.appendChild(conditionsDiv)
+
+    const tempDiv = document.createElement("div")
+    tempDiv.textContent = weather.temp + " F"
+    content.appendChild(tempDiv)
+}
+
 searchBtn.addEventListener("click", () => {
-    getWeatherData(searchBar.value)
+    getWeatherData(searchBar.value.toLowerCase())
 
     resetSearch()
 })
