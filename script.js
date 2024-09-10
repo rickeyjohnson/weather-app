@@ -13,6 +13,7 @@ async function getWeatherData(location) {
     const currentWeather = { address, conditions, temp}
 
     console.log(currentWeather)
+    clearWeather()
     displayWeather(currentWeather)
 }
 
@@ -36,6 +37,16 @@ function displayWeather(weather) {
     const tempDiv = document.createElement("div")
     tempDiv.textContent = weather.temp + " F"
     content.appendChild(tempDiv)
+}
+
+function clearWeather() {
+    let e = document.querySelector("#content");
+
+    let child = e.lastElementChild;
+    while (child) {
+        e.removeChild(child);
+        child = e.lastElementChild;
+    }
 }
 
 searchBtn.addEventListener("click", () => {
